@@ -1,0 +1,11 @@
+
+public class Mammal {
+	public void greeting() {
+		System.out.println("Greetings from the Mammal class!");
+	}
+	
+	
+	Mammal instance = new Mammal();
+	instance.greeting();
+
+}

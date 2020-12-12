@@ -1,0 +1,10 @@
+package com.codingdojo.bankaccount;
+
+public class BankAccountTester {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

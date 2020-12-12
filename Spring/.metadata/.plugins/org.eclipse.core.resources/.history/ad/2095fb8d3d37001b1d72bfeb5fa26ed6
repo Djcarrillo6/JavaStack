@@ -1,0 +1,9 @@
+package com.codingdojo.phone;
+
+public class iPhone {
+
+	public iPhone() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

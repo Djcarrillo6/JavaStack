@@ -1,0 +1,31 @@
+package com.codingdojo.bankaccount;
+
+public class BankAccount {
+	
+	public String accountNumber;
+	public Double checkingBalance;
+	public String savingsBalance;
+	
+	
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public Double getCheckingBalance() {
+		return checkingBalance;
+	}
+	public void setCheckingBalance(Double checkingBalance) {
+		this.checkingBalance = checkingBalance;
+	}
+	public String getSavingsBalance() {
+		return savingsBalance;
+	}
+	public void setSavingsBalance(String savingsBalance) {
+		this.savingsBalance = savingsBalance;
+	}
+	
+	
+
+}

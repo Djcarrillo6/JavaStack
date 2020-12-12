@@ -1,0 +1,13 @@
+package com.codingdojo.zookeeper;
+import Mammal;
+
+public class MammalTester {
+
+	public static void main(String[] args) {
+		Mammal instance = new Mammal();
+		
+		instance.greeting();
+
+	}
+
+}

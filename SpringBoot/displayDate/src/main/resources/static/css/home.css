@@ -1,0 +1,20 @@
+#display {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20rem;
+	
+}
+
+
+
+
+a {
+	margin-right: 10rem;
+	color: blue;
+}
+
+#green-link {
+	color: green;
+}
