@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 	@Entity
@@ -72,6 +74,16 @@ import javax.persistence.Table;
 		public void setNinjas(List<Ninja> ninjas) {
 			this.ninjas = ninjas;
 		}
+		
+		// CREATE AND UPDATE DATETIME FUNCTIONS //
+	    @PrePersist
+	    protected void onCreate(){
+	        this.createdAt = new Date();
+	    }
+	    @PreUpdate
+	    protected void onUpdate(){
+	        this.updatedAt = new Date();
+	    }
 
 	}
 	

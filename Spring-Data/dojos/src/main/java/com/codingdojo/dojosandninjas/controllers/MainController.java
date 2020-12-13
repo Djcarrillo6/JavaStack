@@ -1,4 +1,4 @@
-package com.codingdojo.dojosandninjas.controllers;
+	package com.codingdojo.dojosandninjas.controllers;
 
 import javax.validation.Valid;
 
