@@ -65,7 +65,7 @@ public class MainController {
 		};
 		
 		
-		// POST to create Ninja
+		// POST to create a Ninja
 		@PostMapping("/createNinja")
 		public String createNinja(@Valid @ModelAttribute("ninja") Ninja ninja, BindingResult result) {
 			if(result.hasErrors()) {
