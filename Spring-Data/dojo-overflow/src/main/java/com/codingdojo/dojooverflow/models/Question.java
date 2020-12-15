@@ -1,5 +1,6 @@
 package com.codingdojo.dojooverflow.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import javax.xml.soap.Text;
 
 @Entity
 @Table(name="questions")
@@ -27,45 +27,63 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(min = 1, max = 300)
-	private String text;
+	@Column(nullable = false)
+	@Size(min = 2, max = 2000)
+	private String question;
 	
 	@Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
-    
-    @OneToMany(mappedBy="question", fetch = FetchType.LAZY)
-    private List<Answer> answers;
-    
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "tags_questions", 
-        joinColumns = @JoinColumn(name = "question_id"), 
-        inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private List<Tag> tags;
-    
-    
+
+	@OneToMany(mappedBy="question", fetch=FetchType.LAZY)
+	private List<Answer> answers = new ArrayList<>();
 	
-	public Question(){};
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="questions_tags",
+			joinColumns = @JoinColumn(name = "question_id"),
+			inverseJoinColumns = @JoinColumn(name = "tag_id")
+			)
+	private List<Tag> tags = new ArrayList<>();
 	
+	public Question() {};
+	
+	public Question(String question) {
+		this.question = question;
+	};
 	
 	public Long getId() {
 		return id;
-	}
+	};
+	
 	public void setId(Long id) {
 		this.id = id;
-	}
-
+	};
 	
-	public String getText() {
-		return text;
-	}
-
-
-	public void setText(String text) {
-		this.text = text;
-	}
+	public String getQuestion() {
+		return question;
+	};
+	
+	public void setQuestion(String question) {
+		this.question = question;
+	};
+	
+	public List<Answer> getAnswers() {
+		return answers;
+	};
+	
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	};
+	
+	public List<Tag> getTags() {
+		return tags;
+	};
+	
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	};
+	
 
 
 	public Date getCreatedAt() {

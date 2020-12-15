@@ -5,64 +5,73 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.codingdojo.dojooverflow.models.Answer;
 import com.codingdojo.dojooverflow.models.Question;
 import com.codingdojo.dojooverflow.models.Tag;
-import com.codingdojo.dojooverflow.services.AnswerService;
-import com.codingdojo.dojooverflow.services.QuestionService;
-import com.codingdojo.dojooverflow.services.TagService;
+import com.codingdojo.dojooverflow.models.TagList;
+import com.codingdojo.dojooverflow.services.DojoService;
 
 @Controller 
 public class MainController {
 	
 	@Autowired
-	private QuestionService questionService;
-	
-	@Autowired
-	private TagService tagService;
-	
-	@Autowired
-	private AnswerService answerService;
+	private DojoService service;
 	
 	
-	
-	// Routes
-	
-	// Display ALL questions on Question Dashboard
-	@GetMapping("/questions")
-	public String allQuestions(Model model) {
-		model.addAttribute("questions", questionService.showAllQuestions());
-		model.addAttribute("tags", tagService.showAllTags());
-		return "index.jsp";
+	@RequestMapping("/questions")
+	public String questions(Model model) {
+		model.addAttribute("questions", service.allQuestions());
+		return "questions.jsp";
 	};
 	
 	
-	@GetMapping("/questions/new")
-	public String questionForm(ModelMap map) {
-		
-		Question question = new Question();
-		Tag tag = new Tag();
-		
-		map.addAttribute("question", question);
-		map.addAttribute("tag", tag);
-		
-		return "new-question-form.jsp";
-	};
 	
-	@PostMapping("/submit-question")
-	public String createQuestion(@Valid @ModelAttribute("question") Question question, BindingResult resultQ, Tag tag, BindingResult resultT) {
-			if(resultQ.hasErrors() || resultT.hasErrors()) {
-				return "new-question-form.jsp";
+	@RequestMapping("/new")
+	public String addQuestionPage(@ModelAttribute("newQuestion") Question question) {
+		return "newQuestion";
+	}
+	@PostMapping("/new")
+	public String addQuestion(@Valid @ModelAttribute("newQuestion") Question question, BindingResult result, @RequestParam(value="tagList") String tags) {
+		if(result.hasErrors()) {
+			return "newQuestion";
+		}
+		TagList list = new TagList(tags);
+		Question savedQuestion = service.addQuestion(question);
+		for(String val:list.getTags()) {
+			if(service.allTagNames().contains(val) == false) {
+				Tag savedTag = service.addTag(new Tag(val));
+				service.addQuestionTag(savedQuestion, savedTag);
+			} else {
+				service.addQuestionTag(savedQuestion, service.findTagByName(val));
 			}
-			
-			questionService.save(question);
-			tagService.createTag(tag);
-			return "redirect:/questions";
-	};
+		}
+		return "redirect:/questions/new";
+	}
+	@RequestMapping("/{id}")
+	public String showQuestion(@PathVariable("id") Long id, Model model, @ModelAttribute("newAnswer") Answer answer) {
+		model.addAttribute("question", service.findQuestion(id));
 
+		
+		return "question.jsp";
+	}
+	@PostMapping("/{id}")
+	public String addAnswer(@Valid @ModelAttribute("newAnswer") Answer answer, BindingResult result, @PathVariable("id") Long id, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("question", service.findQuestion(id));
+			return "question.jsp";
+		}
+		
+		Answer ans = service.addAnswer(new Answer(answer.getAnswer()));
+		service.addAnswerToQuestion(ans, service.findQuestion(id));
+		
+		return "redirect:/questions/{id}";
+	}
+	
 }

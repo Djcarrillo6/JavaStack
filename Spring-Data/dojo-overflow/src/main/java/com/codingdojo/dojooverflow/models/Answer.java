@@ -20,55 +20,51 @@ import javax.validation.constraints.Size;
 public class Answer {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long id;
 	
-	@Size(min = 1, max = 300)
-	private String text;
+	@Column(nullable = false)
+	@Size(min = 2, max = 2000)
+	private String answer;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="question_id")
+	private Question question;
 	
 	@Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
-    
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="question_id")
-    private Question question;
-    
-    
-    Answer(){};
-
+	
+	public Answer() {};
+	
+	public Answer(String answer) {
+		this.answer = answer;
+	};
+	
 	public Long getId() {
 		return id;
-	}
-
+	};
+	
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	};
+	
+	public String getAnswer() {
+		return answer;
+	};
+	
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	};
+	
+	public Question getQuestion() {
+		return question;
+	};
+	
+	public void setQuestion(Question question) {
+		this.question = question;
+	};
+	
 	
 	// CREATE AND UPDATE DATETIME FUNCTIONS //
     @PrePersist
