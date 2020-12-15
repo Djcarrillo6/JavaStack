@@ -42,7 +42,7 @@ public class Tag {
 
     
     
-    Tag(){};
+    public Tag(){};
 
 
 	public Long getId() {

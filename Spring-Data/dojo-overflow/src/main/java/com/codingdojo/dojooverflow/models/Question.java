@@ -47,7 +47,7 @@ public class Question {
     
     
 	
-	Question(){};
+	public Question(){};
 	
 	
 	public Long getId() {

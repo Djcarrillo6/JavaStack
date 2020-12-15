@@ -31,7 +31,7 @@ public class QuestionService {
 		
 	};
 	
-	public void createQuestion(Question question) {
+	public void save(Question question) {
 		repo.save(question);
 		return;
 		

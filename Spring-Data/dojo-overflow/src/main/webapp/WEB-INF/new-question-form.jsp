@@ -3,6 +3,7 @@
     <%@ page isErrorPage="true" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "form" uri = "http://www.springframework.org/tags/form" %>
+
  
 <!DOCTYPE html>
 
@@ -14,16 +15,33 @@
 <title>New Question</title>
 </head>
 <body>
-	<form:form>
-	  <div class="form-group">
-	    <label for="Questions">Question:</label>
-	    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+	<form:form action="/submit-question" method="POST" modelAttribute="question">
+	  <div style="width: 80%;
+    			margin-left: 10rem;" 
+    			class="form-group">
+	    <form:label path="text" for="Question">Question:</form:label>
+	    <form:input path="text" class="form-control" id="exampleFormControlTextarea1" rows="5"></form:input>
+	    <form:errors path="text"></form:errors>
 	  </div>
 	  
-	  <div class="form-group">
-	    <label for="Tags">Tags:</label>
-	    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Tag(s)">
-	  </div>
+
+		  <div style="width: 60%;
+	    			margin-left: 10rem;" class="form-group">
+		    <form:label path="${tag.getSubject()}" for="Tag">Tags:</form:label>
+		    <form:input path="${tag.getSubject()}" type="text" class="form-control" id="exampleFormControlInput1"></form:input>
+		     <form:errors path="${tag.getSubject()}"></form:errors>
+		  </div>
+	  
+
+	   <div style="display: flex;
+    flex-direction: row-reverse;
+    margin-right: 14rem;
+    margin-top: 5rem;
+    	">
+
+    
+			<input style="background-color:green;"  type="submit" value="Submit"/>
+		</div>
 	</form:form>
 </body>
 </html>

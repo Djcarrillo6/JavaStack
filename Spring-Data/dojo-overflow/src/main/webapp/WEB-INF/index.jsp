@@ -30,18 +30,21 @@
                     </thead>
                     <tbody>
                     	<c:forEach items="${questions}" var="q">
+                    	<c:forEach items="${tags}" var="t">
                     		<tr>
-	                            <td><a href="/">Sample questions ONLY as a placeholder!</a></td>
-	                            <td> - Tags Holder -</td>
+	                            <td><a href="/">${q.text}</a></td>
+	                            <td>${t.subject}</td>
 	                        </tr>
+	                        </c:forEach>
                     	</c:forEach>
                     </tbody>
                 </table>
             </div>
             
-             <div class="col-2">
-                    <a href="/">New Question</a>
-                </div>
+             <div style="display: flex;
+    					flex-direction: row-reverse;">
+                    <a href="/questions/new">New Question</a>
+             </div>
         </div>
 </body>
 </html>
