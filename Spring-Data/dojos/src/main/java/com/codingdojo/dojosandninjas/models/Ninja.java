@@ -15,7 +15,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ninjas")
+@Table(name="ninjas") 
 public class Ninja {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
